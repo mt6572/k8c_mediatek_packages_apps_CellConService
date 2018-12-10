@@ -285,6 +285,7 @@ public class ConfirmDlgActivity extends Activity implements OnClickListener {
         if (PhoneStatesMgrService.CONFIRM_TYPE_FDN == mConfirmType 
                 || PhoneStatesMgrService.CONFIRM_TYPE_SIMLOCKED == mConfirmType
                 || PhoneStatesMgrService.CONFIRM_TYPE_SLOTLOCKED == mConfirmType) {
+            Log.d("lllll", "simlock called");
             mAlertDlg = new AlertDialog.Builder(this).setMessage(mText).setIcon(
                     android.R.drawable.ic_dialog_alert).setNegativeButton(
                     android.R.string.ok, this).setCancelable(true)
@@ -297,19 +298,24 @@ public class ConfirmDlgActivity extends Activity implements OnClickListener {
                                 }
                             }).show();
         } else if (PhoneStatesMgrService.CONFIRM_TYPE_ROAMING == mConfirmType) {
-            mAlertDlg = new AlertDialog.Builder(this).setMessage(mText).setTitle(mTitle)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(mButtonText, this).setNegativeButton(
-                            mRButtonText, this).setCancelable(true)
-                    .setOnCancelListener(
+
+            Log.d("lllll", "Roaming AlertDialog call");
+
+            mAlertDlg = new AlertDialog.Builder(this).create();
+
+                    mAlertDlg.dismiss();
+                    /*.setOnCancelListener(
                             new DialogInterface.OnCancelListener() {
                                 public void onCancel(DialogInterface dialog) {
-                                    Log.d(LOGTAG, "onClick is cancel");
-                                    mNegativeExit = true;
-                                    sendConfirmResult(mConfirmType, false);
+                                    //Log.d(LOGTAG, "onClick is cancel");
+                                    //mNegativeExit = true;
+                                    //sendConfirmResult(mConfirmType, false);
                                 }
-                            }).show();
+                            });*/
+                            sendConfirmResult(mConfirmType, true);
         } else {
+            Log.d("lllll", "Roaming else call");
+
             mAlertDlg = new AlertDialog.Builder(this).setMessage(mText)
                     .setTitle(mTitle).setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(mButtonText, this).setNegativeButton(
